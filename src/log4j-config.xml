@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+  <Properties>
+  	<!-- format vystupu -->
+    <Property name="format">%d{yyyy.MM.dd HH:mm:ss} [%-level - %C{1}.%M()] - %msg%n</Property>
+    <!-- nazev vystupniho souboru pro logy cinnosti aplikace -->
+    <Property name="applicationFile">logs/application-log</Property>
+    <!-- nazvy vystupnich souboru pro logy jednotlivych sluzeb -->
+    <Property name="systemLoadFile">logs/system_load-log</Property>
+    <Property name="instanceIDFile">logs/instance_id-log</Property>
+    <Property name="sessionsCountFile">logs/sessions_count-log</Property>
+    <Property name="sessionsInfoFile">logs/sessions_info-log</Property>
+    <Property name="memoryInfoFile">logs/memory_info-log</Property>
+  </Properties>
+  
+  <Appenders>
+    <!-- <Console name="console" target="SYSTEM_OUT">
+      <PatternLayout pattern="${format}"/>
+    </Console> -->
+    
+    <!-- logovani cinnosti aplikace (5 souborů po 5 MB) -->
+    <RollingFile name="application" fileName="${applicationFile}_1.txt" filePattern="${applicationFile}_%i.txt">
+	  <PatternLayout pattern="${format}"/>
+	  <DefaultRolloverStrategy min="1" max="5" />
+	  <SizeBasedTriggeringPolicy size="5 MB" />
+    </RollingFile>
+    
+    <!-- logovani pro jednotlive sluzby (od kazde 5 historickych souboru po 1 MB) -->
+    <RollingFile name="systemLoad" fileName="${systemLoadFile}_1.txt" filePattern="${systemLoadFile}_%i.txt">
+		<PatternLayout pattern="${format}"/>
+		<DefaultRolloverStrategy min="1" max="5" />
+		<SizeBasedTriggeringPolicy size="1 MB" />
+    </RollingFile>
+    <RollingFile name="instanceID" fileName="${instanceIDFile}_1.txt" filePattern="${instanceIDFile}_%i.txt">
+		<PatternLayout pattern="${format}"/>
+		<DefaultRolloverStrategy min="1" max="5" />
+		<SizeBasedTriggeringPolicy size="1 MB" />
+    </RollingFile>
+    <RollingFile name="sessionsCount" fileName="${sessionsCountFile}_1.txt" filePattern="${sessionsCountFile}_%i.txt">
+		<PatternLayout pattern="${format}"/>
+		<DefaultRolloverStrategy min="1" max="5" />
+		<SizeBasedTriggeringPolicy size="1 MB" />
+    </RollingFile>
+    <RollingFile name="sessionsInfo" fileName="${sessionsInfoFile}_1.txt" filePattern="${sessionsInfoFile}_%i.txt">
+		<PatternLayout pattern="${format}"/>
+		<DefaultRolloverStrategy min="1" max="5" />
+		<SizeBasedTriggeringPolicy size="1 MB" />
+    </RollingFile>
+    <RollingFile name="memoryInfo" fileName="${memoryInfoFile}_1.txt" filePattern="${memoryInfoFile}_%i.txt">
+		<PatternLayout pattern="${format}"/>
+		<DefaultRolloverStrategy min="1" max="5" />
+		<SizeBasedTriggeringPolicy size="1 MB" />
+    </RollingFile>
+  </Appenders>
+
+  <Loggers>
+    <Root level="DEBUG">
+    <!-- <AppenderRef ref="console"/> -->
+    </Root>
+    
+    <!-- odkazy na loggery pro logovani cinnosti aplikace -->
+    <Logger name="application" level="DEBUG">
+   		<AppenderRef ref="application"/>
+    </Logger>
+    
+    <!-- odkazy na loggery pro logovani jednotlivych sluzeb -->
+    <Logger name="systemLoad" level="DEBUG">
+      <AppenderRef ref="systemLoad"/>
+    </Logger>
+    <Logger name="instanceID" level="DEBUG">
+      <AppenderRef ref="instanceID"/>
+    </Logger>
+    <Logger name="sessionsCount" level="DEBUG">
+      <AppenderRef ref="sessionsCount"/>
+    </Logger>
+    <Logger name="sessionsInfo" level="DEBUG">
+      <AppenderRef ref="sessionsInfo"/>
+    </Logger>
+    <Logger name="memoryInfo" level="DEBUG">
+      <AppenderRef ref="memoryInfo"/>
+    </Logger>
+
+  </Loggers>
+  
+</Configuration>

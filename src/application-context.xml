@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <!-- instance RestTemplate -->
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+	    <constructor-arg>
+	        <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+	            <property name="readTimeout" value="5000" />
+	            <property name="connectTimeout" value="3000" />
+	        </bean>
+	    </constructor-arg>
+	</bean>
+	
+	<!-- instance UrlFactory s mapou (asociativni pole, klic:hodnota) url instanci -->
+	<bean id="urlFactory" class="library.UrlFactory">
+		<property name="urls">
+			<map>
+				<entry key="instance_id" value="http://peerfile.eu:4000/api/mon/instance_id"/>
+				<entry key="system_load" value="http://peerfile.eu:4000/api/mon/system_load"/>
+				<entry key="sessions_count" value="http://peerfile.eu:4000/api/mon/sessions_count"/>
+				<entry key="sessions_info" value="http://peerfile.eu:4000/api/mon/sessions_info"/>
+				<entry key="memory_info" value="http://peerfile.eu:4000/api/mon/memory_info"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- injectnute beany -->
+	<bean id="peerFileMonitor" class="library.PeerFileMonitor">
+	    <constructor-arg type="org.springframework.web.client.RestTemplate" ref="restTemplate"/>
+	    <constructor-arg type="UrlFactory" ref="urlFactory"/>
+	</bean>
+	
+</beans>

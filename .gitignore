@@ -1,0 +1,13 @@
+/target
+/bin/
+/.settings/
+/.project
+/build/
+/nbproject/
+/build.xml
+/manifest.mf
+/.classpath
+*.prefs
+*.class
+*log_?.txt
+/dist/
